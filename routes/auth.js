@@ -13,7 +13,16 @@ router.get('/signup', authController.getSignup);
 
 router.post(
     '/signup', 
-    check('email').isEmail().withMessage('Please Enter a Valid Email!'),   // check & validate 'email' (location could be body, header, etc. not specified)
+    check('email')  // check & validate 'email' (location could be body, header, etc. not specified)
+    .isEmail()
+    .withMessage('Please Enter a Valid Email!').custom((value, { req }) => {    // the options contains req, location, path. But, we only interested in req.
+        console.log('router_postSignup_value..... ', value, '\noption..... ', req);
+        if (value === 'test@test.com') {
+            throw new Error('This Email is Forbidden!');
+        }
+
+        return true;
+    }),
     authController.postSignup
     );
 
