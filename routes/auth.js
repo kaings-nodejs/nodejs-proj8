@@ -27,8 +27,14 @@ router.post(
         body('password', 'Please Enter Password with Only Numbers & Min. 5 Characters!')    // check & validate 'password' (specified location on the body)
         .isLength({ min: 5 })
         //.withMessage('Please Enter Password with at Least 5 Characters!')   // you can also specify each message for each validations like this
-        .isNumeric()
+        .isNumeric(),
         //.withMessage('Please Enter Password with Only Numbers')     // you can also specify each message for each validations like this
+        body('confirmPassword').custom((value, { req }) => {
+            if(value !== req.body.password) {
+                throw new Error('Password MUST Match!');
+            }
+            return true;
+        })
     ],
     authController.postSignup
     );
