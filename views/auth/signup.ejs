@@ -10,7 +10,7 @@
         <% if(errMessage.length > 0) { %>
         <h3 class="login-form"><%= errMessage %></h3>
         <% } %>
-        <form class="login-form" action="/signup" method="POST">
+        <form class="login-form" action="/signup" method="POST" novalidate> <!-- novalidate to disable the native validation. eg. type="email", etc. -->
             <div class="form-control">
                 <label for="email">E-Mail</label>
                 <input type="email" name="email" id="email">
