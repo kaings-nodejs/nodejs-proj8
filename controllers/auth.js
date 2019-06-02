@@ -81,16 +81,9 @@ exports.postSignup = (req, res, next) => {
         });
     }
 
-    User.findOne({email: email})
-    .then(userDoc => {
-        console.log('postSignup_userDoc..... ', userDoc);
 
-        if (userDoc) {
-            req.flash('error', 'Email Exist! Please Use Other Email!')
-            return res.redirect('/signup');
-        }
-        return bcrypt.hash(password, 12);   // the higher the salt, the more secure https://github.com/dcodeIO/bcrypt.js
-    })
+    bcrypt
+    .hash(password, 12)   // the higher the salt, the more secure https://github.com/dcodeIO/bcrypt.js
     .then(hashedPassword => {
         console.log('postSignup_hashedPassword..... ', hashedPassword);
 

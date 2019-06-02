@@ -1,5 +1,6 @@
 const express = require('express');
-const { check, body } = require('express-validator/check')
+const { check, body } = require('express-validator/check');
+const User = require('../models/user');
 
 const authController = require('../controllers/auth');
 
@@ -18,11 +19,21 @@ router.post(
         .isEmail()
         .withMessage('Please Enter a Valid Email!').custom((value, { req }) => {    // the options contains req, location, path. But, we only interested in req.
             console.log('router_postSignup_value..... ', value, '\noption..... ', req);
-            if (value === 'test@test.com') {
-                throw new Error('This Email is Forbidden!');
-            }
+            // if (value === 'test@test.com') {
+            //     throw new Error('This Email is Forbidden!');
+            // }
 
-            return true;
+            // return true;
+
+            return User.findOne({email: value})
+            .then(userDoc => {
+                console.log('postSignup_userDoc..... ', userDoc);
+        
+                if (userDoc) {
+                    /* validator will check get error 1) if there is error thrown, 2) return Promise is rejected */
+                    return Promise.reject('Email Already Exist!!');
+                }
+            })
         }),
         body('password', 'Please Enter Password with Only Numbers & Min. 5 Characters!')    // check & validate 'password' (specified location on the body)
         .isLength({ min: 5 })
