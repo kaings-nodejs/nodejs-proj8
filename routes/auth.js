@@ -13,7 +13,7 @@ router.get('/signup', authController.getSignup);
 
 router.post(
     '/signup', 
-    check('email').isEmail(),   // check & validate 'email' (location could be body, header, etc. not specified)
+    check('email').isEmail().withMessage('Please Enter a Valid Email!'),   // check & validate 'email' (location could be body, header, etc. not specified)
     authController.postSignup
     );
 
