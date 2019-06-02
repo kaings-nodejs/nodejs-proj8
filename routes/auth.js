@@ -1,4 +1,5 @@
 const express = require('express');
+const { check } = require('express-validator/check')
 
 const authController = require('../controllers/auth');
 
@@ -10,7 +11,11 @@ router.post('/login', authController.postAuth);
 
 router.get('/signup', authController.getSignup);
 
-router.post('/signup', authController.postSignup);
+router.post(
+    '/signup', 
+    check('email').isEmail(),   // check & validate 'email' (location could be body, header, etc. not specified)
+    authController.postSignup
+    );
 
 router.post('/logout', authController.postLogout);
 
