@@ -65,7 +65,8 @@ exports.getSignup = (req, res, next) => {
           email: '',
           password: '',
           confirmPassword: ''
-      }
+      },
+      validatorParams: validationErr.array()
     });
 };
 
@@ -87,7 +88,8 @@ exports.postSignup = (req, res, next) => {
                 email: email,
                 password: password,
                 confirmPassword: confirmPassword
-            }
+            },
+            validatorParams: validationErr.array()
         });
     }
 

@@ -13,15 +13,18 @@
         <form class="login-form" action="/signup" method="POST" novalidate> <!-- novalidate to disable the native validation. eg. type="email", etc. -->
             <div class="form-control">
                 <label for="email">E-Mail</label>
-                <input type="email" name="email" id="email" value="<%= prevInput.email %>">
+                <input type="email" name="email" id="email" 
+                value="<%= prevInput.email %>" class="<%= validatorParams.find(v => v.param === 'email')? 'invalid' : '' %>">
             </div>
             <div class="form-control">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" value="<%= prevInput.password %>">
+                <input type="password" name="password" id="password" 
+                value="<%= prevInput.password %>" class="<%= validatorParams.find(v => v.param === 'password')? 'invalid' : '' %>">
             </div>
             <div class="form-control">
                 <label for="confirmPassword">Confirm Password</label>
-                <input type="password" name="confirmPassword" id="confirmPassword" value="<%= prevInput.confirmPassword %>">
+                <input type="password" name="confirmPassword" id="confirmPassword" 
+                value="<%= prevInput.confirmPassword %>" class="<%= validatorParams.find(v => v.param === 'confirmPassword')? 'invalid' : '' %>">
             </div>
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">  <!-- '_csrf' is default name, csrfToken is passed during rendering page -->
             <button class="btn" type="submit">Signup</button>
