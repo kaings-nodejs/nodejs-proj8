@@ -60,7 +60,12 @@ exports.getSignup = (req, res, next) => {
     res.render('auth/signup', {
       path: '/signup',
       pageTitle: 'Signup',
-      errMessage: req.flash('error')
+      errMessage: req.flash('error'),
+      prevInput: {
+          email: '',
+          password: '',
+          confirmPassword: ''
+      }
     });
 };
 
@@ -77,7 +82,12 @@ exports.postSignup = (req, res, next) => {
         return res.status(422).render('auth/signup', {
             path: '/signup',
             pageTitle: 'Signup',
-            errMessage: validationErr.array()[0].msg
+            errMessage: validationErr.array()[0].msg,
+            prevInput: {
+                email: email,
+                password: password,
+                confirmPassword: confirmPassword
+            }
         });
     }
 
