@@ -29,6 +29,8 @@ exports.postAuth = (req, res, next) => {
 
     User.findOne({email: email})
     .then(user => {
+        throw new Error('This is DUMMY ERROR for testing!');   // DUMMY ERROR setup for testing
+
         console.log('postAuth_user..... ', user);
         currentUser = user;
 
@@ -53,7 +55,15 @@ exports.postAuth = (req, res, next) => {
             res.redirect('/login');
         }
     })
-    .catch(err => {console.log(err)});
+    .catch(err => {
+        // console.log(err);
+        throw new Error('Throw CATCHED ERROR!', err);    // handling ERROR this way is suitable for SYNC code. But, NOT FOR ASYNC which is why this will crash the server and cause eternal loop
+
+        /* ERROR HANDLING TIPS */
+        // when error is thrown, 
+        // - for SYNC code, use TRY-CATCH method
+        // - for ASYNC code, use THEN()-CATCH() 
+    });
 };
 
 exports.getSignup = (req, res, next) => {
