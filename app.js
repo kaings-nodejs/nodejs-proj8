@@ -64,6 +64,11 @@ app.use(authRoutes);
 
 app.use(errorController.get404);
 
+app.use((error, req, res, next) => {    // this code will be triggered when error is passed through next(). e.g. next(error)
+    console.log('ERROR has Occured! Put Any Code Here to Handle It!', error);
+    res.redirect('/');
+});
+
 mongoose.connect(MONGODB_URI)
 .then(result => {
     console.log(result);

@@ -57,12 +57,16 @@ exports.postAuth = (req, res, next) => {
     })
     .catch(err => {
         // console.log(err);
-        throw new Error('Throw CATCHED ERROR!', err);    // handling ERROR this way is suitable for SYNC code. But, NOT FOR ASYNC which is why this will crash the server and cause eternal loop
+        // throw new Error('Throw CATCHED ERROR!', err);    // handling ERROR this way is suitable for SYNC code. But, NOT FOR ASYNC which is why this will crash the server and cause eternal loop
 
         /* ERROR HANDLING TIPS */
         // when error is thrown, 
         // - for SYNC code, use TRY-CATCH method
         // - for ASYNC code, use THEN()-CATCH() 
+
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error); // this is the CORRECT WAY to handle ASYNC code, the error passed will be handled by express middleware (error, req, res, next) => {}
     });
 };
 
